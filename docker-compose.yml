@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    hostname: localhost
+    environment:
+      GITLAB_OMNIBUS_CONFIG:
+        external_url 'http://localhost.gitlab.com'
+    networks:
+      gitlab-network:
+        aliases:
+          - gitlab
+    volumes:
+      - gitlab-config:/etc/gitlab'
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab'
+    ports:
+    - '8080:80'
+    - '1443:443'
+    - '222:22'
+    restart: always
+
+networks:
+  gitlab-network:
+
+volumes:
+  gitlab-config:
+  gitlab-data:
+  gitlab-logs:
